@@ -38,14 +38,18 @@ INCDIRS := stlib/cminc \
             stlib \
             user \
             modules/led \
-            modules/beep
+            modules/beep \
+            modules/uart \
+            modules/adc
 
 			
 SRCDIRS := stlib \
             stlib/src \
             user \
             modules/led \
-            modules/beep
+            modules/beep \
+            modules/uart \
+            modules/adc
 
 
 VPATH := $(SRCDIRS) $(INCDIRS) 

@@ -4,10 +4,28 @@
 
 #include "bsp_led.h"
 #include "bsp_beep.h"
-
+#include "bsp_uart.h"
+#include "bsp_adc.h"
 
 /* Private typedef -----------------------------------------------------------*/
+
+
 /* Private define ------------------------------------------------------------*/
+
+#define USE_ENV_MONITOR_SENSOR (1)
+
+
+#ifdef USE_ENV_MONITOR_SENSOR
+extern ADC_HandleTypeDef hadc;
+
+#define SLAVE_ADDR 2
+#define NB_BITS             5
+#define NB_INPUT_BITS       0 
+#define NB_REGISTERS        0
+#define NB_INPUT_REGISTERS  2  
+
+#endif
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -32,6 +50,7 @@ int main(void)
      */
   bsp_led_init();
   bsp_beep_init();
+  bsp_adc_init();
 
 
   /* Infinite loop */
