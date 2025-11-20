@@ -26,6 +26,9 @@
 /** @addtogroup STM32F0xx_HAL_Examples
   * @{
   */
+extern ADC_HandleTypeDef hadc;
+extern UART_HandleTypeDef huart1;
+extern TIM_HandleTypeDef htim7;
 
 /** @addtogroup Templates
   * @{
@@ -89,30 +92,50 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-    HAL_IncTick();
+//    HAL_IncTick();
 }
 
-/******************************************************************************/
-/*                 STM32F0xx Peripherals Interrupt Handlers                   */
-/*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
-/*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32f0xx.s).                                               */
-/******************************************************************************/
-
 /**
-  * @brief  This function handles PPP interrupt request.
-  * @param  None
-  * @retval None
+  * @brief This function handles ADC interrupt.
   */
-/*void PPP_IRQHandler(void)
+void ADC1_IRQHandler(void)
 {
-}*/
+  /* USER CODE BEGIN ADC1_IRQn 0 */
+
+  /* USER CODE END ADC1_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc);
+  /* USER CODE BEGIN ADC1_IRQn 1 */
+
+  /* USER CODE END ADC1_IRQn 1 */
+}
 
 
 /**
-  * @}
-  */ 
-
-/**
-  * @}
+  * @brief This function handles TIM7 global interrupt.
   */
+void TIM7_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM7_IRQn 0 */
+
+  /* USER CODE END TIM7_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim7);
+  /* USER CODE BEGIN TIM7_IRQn 1 */
+
+  /* USER CODE END TIM7_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
+
+

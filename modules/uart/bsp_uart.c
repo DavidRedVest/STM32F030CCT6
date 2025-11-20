@@ -2,10 +2,31 @@
 
 UART_HandleTypeDef huart1;
 
+/* RS485芯片方向控制引脚 PA8
+ * 低电平表示接收数据，高电平表示发送数据
+*/
 
+static void bsp_rs485_dir_init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+
+	/*Configure GPIO pin Output Level */
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+	/*Configure GPIO pin : PA8 */
+	GPIO_InitStruct.Pin = GPIO_PIN_8;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/* 默认设置发送数据 */
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+}
 void bsp_uart_init(void)
 {
 	/* USER CODE BEGIN USART1_Init 0 */
+  bsp_rs485_dir_init();
 
   /* USER CODE END USART1_Init 0 */
 
@@ -27,6 +48,7 @@ void bsp_uart_init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
+  
 
   /* USER CODE END USART1_Init 2 */
 }
@@ -89,5 +111,24 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
   }
 }
 
+#if 1
+ /* 为了实现printf打印，需要实现一个myputstr函数 */
+static int myputchar(const char ch)
+{
+	while((USART1->ISR&0X40)==0);//循环发送,直到发送完毕   
+	USART1->TDR = (uint8_t) ch;      
+
+	return ch;	
+}
+
+void myputstr(const char *str)
+{
+	while(*str) {
+		myputchar(*str);
+		str++;
+	}
+
+}
+#endif
 
 
