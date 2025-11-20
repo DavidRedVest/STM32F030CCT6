@@ -21,6 +21,13 @@ DEFS := -DUSE_HAL_DRIVER -DSTM32F030xC -DHSE_VALUE=8000000U -DHSI_VALUE=8000000U
 TARGET := firmware
 LINKER := stlib/STM32F030CCTx_FLASH.ld
 
+# use FreeRTOS code
+FREERTOS_INC := middlewares/freertos middlewares/freertos/include 
+FREERTOS_INC += middlewares/freertos/portable/GCC/ARM_CM0
+FREERTOS_SRC := middlewares/freertos 
+FREERTOS_SRC += middlewares/freertos/portable/GCC/ARM_CM0
+FREERTOS_SRC += middlewares/freertos/portable/MemMang
+
 
 #设置编译参数和编译选项
 CFLAGS := -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -std=c11 -ffunction-sections -fdata-sections 
@@ -40,7 +47,8 @@ INCDIRS := stlib/cminc \
             modules/led \
             modules/beep \
             modules/uart \
-            modules/adc
+            modules/adc \
+            $(FREERTOS_INC)
 
 			
 SRCDIRS := stlib \
@@ -49,7 +57,8 @@ SRCDIRS := stlib \
             modules/led \
             modules/beep \
             modules/uart \
-            modules/adc
+            modules/adc \
+            $(FREERTOS_SRC)
 
 
 VPATH := $(SRCDIRS) $(INCDIRS) 
@@ -109,7 +118,7 @@ clean:
 	@rm -f *.o *.bin *.elf *.dis .*.d obj/* *.map
 
 
-upload:all
+upload:
 	@echo "Flashing firmware to STM32 via J-Link..."
 	@JLinkExe jlink.cfg
 	@echo "Done."

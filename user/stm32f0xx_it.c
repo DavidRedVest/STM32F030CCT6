@@ -67,6 +67,7 @@ void HardFault_Handler(void)
   }
 }
 
+#if 0
 /**
   * @brief  This function handles SVCall exception.
   * @param  None
@@ -94,7 +95,7 @@ void SysTick_Handler(void)
 {
 //    HAL_IncTick();
 }
-
+#endif
 /**
   * @brief This function handles ADC interrupt.
   */

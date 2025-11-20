@@ -1,4 +1,6 @@
 #include "bsp_uart.h"
+#include "device_manager.h"
+
 
 UART_HandleTypeDef huart1;
 
@@ -111,7 +113,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
   }
 }
 
-#if 1
+#if 0
  /* 为了实现printf打印，需要实现一个myputstr函数 */
 static int myputchar(const char ch)
 {

@@ -7,6 +7,11 @@
 #include "bsp_uart.h"
 #include "bsp_adc.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+
 /* Private typedef -----------------------------------------------------------*/
 
 
@@ -30,8 +35,11 @@ extern ADC_HandleTypeDef hadc;
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
+
+
 
 /**
   * @brief  Main program
@@ -55,6 +63,10 @@ int main(void)
   bsp_uart_init();
 
   rt_kprintf("\r\nHello World! \r\n");
+  
+  MX_FREERTOS_Init();
+  
+  vTaskStartScheduler();
 
   /* Infinite loop */
   while (1)
